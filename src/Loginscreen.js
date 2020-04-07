@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import{StyleSheet,view, Text, View,Image,TextInput, TouchableWithoutFeedback,TouchableOpacity} from 'react-native';
+import{StyleSheet,view, Text, View,Image,TextInput, TouchableWithoutFeedback,TouchableOpacity,ActivityIndicator,} from 'react-native';
 import FooterButton from './components/FooterButton'
 import { ScreenContainer } from 'react-native-screens';
 import * as firebase from 'firebase';
 import Toast from 'react-native-easy-toast';
-
+import '@firebase/firestore';
 export default class Loginscreen extends Component{
     
     constructor(props){
@@ -14,11 +14,13 @@ export default class Loginscreen extends Component{
             pwText: '비밀번호',
             id: '',
             pw: '',
+            
         }
     }
     handleLogin = () =>{
         const {navigation} = this.props;
         const {id,pw}= this.state; // 
+        
         firebase
             .auth()
             .signInWithEmailAndPassword(id,pw)

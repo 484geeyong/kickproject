@@ -3,14 +3,17 @@ import { View, Text, StyleSheet, TextInput} from 'react-native';
 import * as firebase from 'firebase';
 import FooterButton from './components/FooterButton';
 import Toast from 'react-native-easy-toast';
+import '@firebase/firestore';
 
 export default class Signup extends Component{
     constructor(props){
         super(props);
+        this.ref = firebase.firestore().collection('user')
         this.state={
             email: '이메일',
+            StudentId:'학번', 
             password:'비밀번호',
-           // StudentId:'학번',          
+                    
         }
         
     }
@@ -21,7 +24,7 @@ export default class Signup extends Component{
         firebase
         .auth()
         .createUserWithEmailAndPassword(this.state.email,this.state.password)
-        .then(()=> navigation.push('Loginscreen'))
+        .then(()=> navigation.push('Loginscreen'),this.ref.doc(this.state.StudentId).set({id: this.state.StudentId}))
         .catch(() => this.refs.toast.show('이메일 형식을 확인해주세요. \n비밀번호는 6자 이상이어야 합니다.',1000));
     }
     render(){
@@ -35,12 +38,12 @@ export default class Signup extends Component{
                 placeholder={this.state.email}
                 placeholderTextColor='white' 
                 autoCorrect={false} />
-                {/* <TextInput
+                <TextInput
                 style={styles.TextInputButton}
                 onChangeText={(StudentId)=> this.setState({StudentId})}
                 placeholder={this.state.StudentId}
                 placeholderTextColor='white' 
-                autoCorrect={false} /> */}
+                autoCorrect={false} />
                 <TextInput
                 style={styles.TextInputButton}
                 onChangeText={(password)=> this.setState({password})}

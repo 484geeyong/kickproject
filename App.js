@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Platform, StyleSheet, Text, View, Image } from 'react-native';
 
 import * as firebase from 'firebase';
-
+import '@firebase/firestore';
  import { NavigationContainer } from '@react-navigation/native';
  import { createStackNavigator } from '@react-navigation/stack';
  
@@ -14,9 +14,10 @@ const AuthStack = createStackNavigator();
 export default () =>(
   <NavigationContainer>
     <AuthStack.Navigator>
+    <AuthStack.Screen name="MainScreen" component={MainScreen} options= {{headerShown: false}}/>
       <AuthStack.Screen name="Loginscreen" component={Loginscreen} options= {{ headerShown: false}}/>
       <AuthStack.Screen name="Signup" component={Signup} options= {{ headerShown: false}}/>
-      <AuthStack.Screen name="MainScreen" component={MainScreen} options= {{headerShown: false}}/>
+      
     </AuthStack.Navigator>
   </NavigationContainer>
 );
