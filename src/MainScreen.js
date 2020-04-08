@@ -45,22 +45,22 @@ export default class MainScreen extends Component{
     
     componentDidMount(){
         this.getLocatin();
-
+        const self=this;
         var hufs;
         var gee = firebase.firestore().collection('user').doc('kick');
+       
         gee.get().then(function(doc){
             if(doc.exists){
-                hufs=doc.data().brow;
+                self.setState({getdata1:doc.data().brow })
                 
-                console.log(hufs);
-                return hufs;
             }else{
               console.log("No");  
             }
         }).catch(function(error){
             console.log("err",error);
         });
-        
+       
+       
     }
     
     
@@ -102,10 +102,10 @@ export default class MainScreen extends Component{
     
     render(){
         const{temp,name}=this.state;
-        
         const {navigation} = this.props;
         
         return (
+            
             <View style={styles.container}>
                 <View style={styles.logout}>
                     <TouchableOpacity 
@@ -121,7 +121,7 @@ export default class MainScreen extends Component{
                         
                         <AntDesign name="clockcircle" color="white" size={45}/>
                     </TouchableOpacity>
-                    <Text style={styles.Ts}>대여</Text>
+                    <Text style={styles.Ts}>대여{this.state.getdata1}</Text>
                 </View>
 
                 <View style={styles.re}>
