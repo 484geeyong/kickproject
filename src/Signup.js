@@ -24,7 +24,7 @@ export default class Signup extends Component{
         firebase
         .auth()
         .createUserWithEmailAndPassword(this.state.email,this.state.password)
-        .then(()=> navigation.push('Loginscreen'),this.ref.doc(this.state.StudentId).set({id: this.state.StudentId}))
+        .then(()=> navigation.push('Loginscreen'),this.ref.add({id:this.state.email}))
         .catch(() => this.refs.toast.show('이메일 형식을 확인해주세요. \n비밀번호는 6자 이상이어야 합니다.',1000));
     }
     render(){

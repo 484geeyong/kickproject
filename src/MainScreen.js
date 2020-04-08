@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet,Alert} from 'react-native';
+import {View, Text, StyleSheet,Alert,Image} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as firebase from 'firebase';
@@ -9,9 +9,8 @@ import WeatherBox from './components/WeatherBox';
 import '@firebase/firestore';
 import * as Location from 'expo-location';
 import axios from "axios";
-
-
 const API_KEY ="f80cd96fc7a28094aa070080d3c5a57b";
+
 
 export default class MainScreen extends Component{
     getWeather = async(latitude,longitude) => {
@@ -22,7 +21,6 @@ export default class MainScreen extends Component{
     };
     getLocatin = async()=>{
         try{
-           
             await Location.requestPermissionsAsync();
             const {
                 coords: {latitude,longitude}
@@ -32,29 +30,44 @@ export default class MainScreen extends Component{
             Alert.alert("Can't find u");
         }
     };
-    componentDidMount(){
-        this.getLocatin();
-    }
-
-    //
     constructor(props) {
         super(props);
+        this.ref=firebase.firestore().collection('user');
         this.state = {
             isSwitchTurnOn: true,
             weatherIcon: "",
             weatherText: "",
             temperature: null,
             location: null,
+            getdata1: null,
         };
     }
     
-    // handleSwitch = () => {
-    //     let URL = this.state.isSwitchTurnOn
-    //     ? "http://192.168.4.1/OFF"
-    //     : "http://192.168.4.1/ON"
-    //     fetch(URL).then(res => console.log(res.json())).catch(err => console.log(err));
-    //     this.setState({isSwitchTurnOn: !this.state.isSwitchTurnOn})
-    // }
+    componentDidMount(){
+        this.getLocatin();
+
+        var hufs;
+        var gee = firebase.firestore().collection('user').doc('kick');
+        gee.get().then(function(doc){
+            if(doc.exists){
+                hufs=doc.data().brow;
+                
+                console.log(hufs);
+                return hufs;
+            }else{
+              console.log("No");  
+            }
+        }).catch(function(error){
+            console.log("err",error);
+        });
+        
+    }
+    
+    
+    getdata=()=>{
+       
+    }
+     
     handleSignOut = () =>{
     const {navigation} = this.props;
     firebase
@@ -62,39 +75,76 @@ export default class MainScreen extends Component{
         .signOut()
         .then(() => navigation.push('Loginscreen'))
         .catch(()=> this.refs.toast.show('오류가 발생했습니다. 다시 시도해 주세요',1000));
-}
+    }
+    handleBw =()=>{
+    firebase.firestore()
+        .collection('user')
+        .doc('kick')
+        .update({
+            brow: 0,
+        })
+        .then(()=>{
+            console.log('update!');
+            
+        });
+    }
+    handleRe =()=>{
+        firebase.firestore()
+            .collection('user')
+            .doc('kick')
+            .update({
+                brow: 1,
+            })
+            .then(()=>{
+                console.log('update!');
+            });
+        }
+    
     render(){
         const{temp,name}=this.state;
+        
         const {navigation} = this.props;
+        
         return (
             <View style={styles.container}>
                 <View style={styles.logout}>
-                    <TouchableOpacity onPress ={this.handleSignOut}>
-
+                    <TouchableOpacity 
+                        onPress={this.handleSignOut}>
                         <AntDesign name="logout" color="white" size={30}/>
                     </TouchableOpacity>
                 </View>
+
+                <View style={styles.bw}>
+                    <TouchableOpacity
+                        onPress={this.handleBw}>
+
+                        
+                        <AntDesign name="clockcircle" color="white" size={45}/>
+                    </TouchableOpacity>
+                    <Text style={styles.Ts}>대여</Text>
+                </View>
+
+                <View style={styles.re}>
+                    <TouchableOpacity
+                        onPress={this.handleRe}>
+                        <AntDesign name="clockcircleo" color="white" size={45}/>
+                    </TouchableOpacity>
+                    <Text style={styles.Ts}>반납{this.brow}</Text>
+                </View>
+
                 <View style={styles.WBox}>
                 <WeatherBox 
-                        //weatherIcon={this.state.weatherIcon}
                         temperature={Math.round(temp)}
                         weather={name}
-                        location=" 오늘의 온도 "
+                        location=" 현재의 온도 "
                     />
                 </View>
                 <Text style={styles.Text}>로그아웃</Text>
                 <View>
-                    
                     <MaterialIcons name="payment" color="white" size={50}/>
                 </View>
-            
                 <Toast ref="toast"/>
             </View>
-            
-            
-       
-
-            
         );
     }
 }
@@ -120,7 +170,21 @@ const styles = StyleSheet.create({
     WBox:{
         position: 'absolute',
         top: 60,
-    
+
+    },
+    bw: {
+        position: 'absolute',
+        top: 250,
+    },
+    re:{
+        position: 'absolute',
+        top: 250,
+        right: 130,
+    },
+    Ts:{
+        fontSize: 16,
+        color: 'white',
+        right: -8,
 
     }
 });

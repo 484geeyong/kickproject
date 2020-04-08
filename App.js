@@ -14,9 +14,11 @@ const AuthStack = createStackNavigator();
 export default () =>(
   <NavigationContainer>
     <AuthStack.Navigator>
-    <AuthStack.Screen name="MainScreen" component={MainScreen} options= {{headerShown: false}}/>
+      <AuthStack.Screen name="MainScreen" component={MainScreen} options= {{headerShown: false}}/>  
       <AuthStack.Screen name="Loginscreen" component={Loginscreen} options= {{ headerShown: false}}/>
       <AuthStack.Screen name="Signup" component={Signup} options= {{ headerShown: false}}/>
+    
+      
       
     </AuthStack.Navigator>
   </NavigationContainer>
@@ -34,5 +36,5 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-
+ 
  
