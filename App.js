@@ -13,10 +13,10 @@ import MainScreen from './src/MainScreen';
 const AuthStack = createStackNavigator();
 export default () =>(
   <NavigationContainer>
-    <AuthStack.Navigator>
-      <AuthStack.Screen name="MainScreen" component={MainScreen} options= {{headerShown: false}}/>  
+    <AuthStack.Navigator> 
       <AuthStack.Screen name="Loginscreen" component={Loginscreen} options= {{ headerShown: false}}/>
       <AuthStack.Screen name="Signup" component={Signup} options= {{ headerShown: false}}/>
+      <AuthStack.Screen name="MainScreen" component={MainScreen} options= {{headerShown: false}}/> 
     
       
       
