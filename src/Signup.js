@@ -17,8 +17,6 @@ export default class Signup extends Component{
         }
         
     }
-    
-    
     handleSignUp = () => {
         const {navigation} = this.props;
         firebase

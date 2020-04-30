@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet,Alert,Image,button,alert} from 'react-native';
+import {View, Text, StyleSheet,Alert,Image,button,alert,Platform} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as firebase from 'firebase';
@@ -12,7 +12,7 @@ import axios from "axios";
 import FooterButton from './components/FooterButton'
 const API_KEY ="f80cd96fc7a28094aa070080d3c5a57b";
 
-const alertText ='이용가능한 킥보드가 없습니다.'
+
 export default class MainScreen extends Component{
     getWeather = async(latitude,longitude) => {
         const {data}= await axios.get(
@@ -41,16 +41,19 @@ export default class MainScreen extends Component{
             temperature: null,
             location: null,
             getdata1: null,
-            
+            show:true,
+            showre:true,
         };
         
     }
     
     componentDidMount(){
         this.getLocatin();
-        
+        this.refreshScreen();
 
     }
+    
+
     handleSignOut = () =>{
     const {navigation} = this.props;
     firebase
@@ -60,23 +63,31 @@ export default class MainScreen extends Component{
         .catch(()=> this.refs.toast.show('오류가 발생했습니다. 다시 시도해 주세요',1000));
     }
     handleBw =()=>{
+   
+        console.log(this.state.getdata1);
         if(this.state.getdata1==1){
-        this.refs.toast.show('비밀번호는 0000입니다.',1000);}
-        else{
-            this.refs.toast.show('이미 사용중입니다.',1000);
-        }
-    firebase.firestore()
+        this.refs.toast.show('비밀번호는 0000입니다.',1000);
+        firebase.firestore()
         .collection('user')
         .doc('kick')
         .update({
             brow: 0,
         })
         .then(()=>{
-            console.log('update!');
-            
+            this.refreshScreen();
         });
+        //this.refreshScreen();
+        }
+        else if(this.state.getdata1==0){
+            this.refs.toast.show('이미 사용중입니다.',1000);
+        }
+        
     }
     handleRe =()=>{
+        this.refreshScreen();
+        console.log(this.state.getdata1);
+        if(this.state.getdata1==0){
+        this.refs.toast.show('반납성공!',1000);
         firebase.firestore()
             .collection('user')
             .doc('kick')
@@ -84,11 +95,19 @@ export default class MainScreen extends Component{
                 brow: 1,
             })
             .then(()=>{
-                console.log('update!');
+                this.refreshScreen();
             });
-            
+       // this.refreshScreen();
+        }
+        else if(this.state.getdata1==1){
+            this.refs.toast.show('대여한 킥보드가 없습니다.',1000);
+        }
+        
+        this.refreshScreen();
         }
     refreshScreen = ()=>{
+        this.setState(previousState=>({show: !previousState.show}))
+        this.setState(previousState =>({showre: !previousState.showre}))
         const self=this;
         var gee = firebase.firestore().collection('user').doc('kick');
        
@@ -116,35 +135,47 @@ export default class MainScreen extends Component{
                     </TouchableOpacity>
                 </View>
                 <View style={styles.reload}>
-           
-                  
-                    <FooterButton  buttonText="대여가능 킥보드보기"
+                    <FooterButton  buttonText="대여하기 / 반납하기"
                     style={styles.loginButton}
                     onPress={this.refreshScreen}>
         
                     /</FooterButton>
                 </View>
-                <Image
+                
+                <Image style={styles.img}
                         source={
                             this.state.getdata1
-                            ? require('./logogo22.png')
-                            : require('./logogo21.png')
+                            ? require('./ok.png')
+                            : require('./no.png')
                         }style={styles.icon}/>
-                <View style={styles.bw}>
+                {
+                    this.state.show 
+                    ? 
+                    <View style={styles.bw}>
                     <TouchableOpacity
                         onPress={this.handleBw}>
                         <AntDesign name="clockcircle" color="white" size={45}/>
                     </TouchableOpacity>
                     <Text style={styles.Ts}>대여</Text>
                 </View>
-
-                <View style={styles.re}>
+                    : 
+                    null
+                }
+                {
+                    this.state.showre
+                    ?
+                    <View style={styles.re}>
                     <TouchableOpacity
                         onPress={this.handleRe}>
                         <AntDesign name="clockcircleo" color="white" size={45}/>
                     </TouchableOpacity>
                     <Text style={styles.Ts}>반납{this.brow}</Text>
                 </View>
+                    :
+                    null
+                }
+                
+               
 
                 <View style={styles.WBox}>
                 <WeatherBox 
@@ -154,9 +185,6 @@ export default class MainScreen extends Component{
                     />
                 </View>
                 <Text style={styles.Text}>로그아웃</Text>
-                {/* <View>
-                    <MaterialIcons name="payment" color="white" size={50}/>
-                </View> */}
                 <Toast ref="toast"/>
             </View>
         );
@@ -204,6 +232,7 @@ const styles = StyleSheet.create({
 
     },
     reload:{
+        
         position: 'absolute',
         bottom: 530,
         left: 30,
@@ -217,6 +246,8 @@ const styles = StyleSheet.create({
     },
     icon: {
         
-        top: 20
+        top: 35,
+        left: 10
     },
+    
 });

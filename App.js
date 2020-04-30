@@ -11,6 +11,8 @@ import Signup from './src/Signup';
 import MainScreen from './src/MainScreen';
 
 const AuthStack = createStackNavigator();
+
+
 export default () =>(
   <NavigationContainer>
     <AuthStack.Navigator> 
