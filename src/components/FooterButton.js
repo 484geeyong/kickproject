@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         
+        
     },
     footerButtonText: {
         position: 'absolute',

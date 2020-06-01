@@ -12,7 +12,16 @@ import axios from "axios";
 import FooterButton from './components/FooterButton'
 const API_KEY ="f80cd96fc7a28094aa070080d3c5a57b";
 
+import { YellowBox } from 'react-native';
+import _ from 'lodash';
 
+YellowBox.ignoreWarnings(['Setting a timer']);
+const _console = _.clone(console);
+console.warn = message => {
+  if (message.indexOf('Setting a timer') <= -1) {
+    _console.warn(message);
+  }
+};
 export default class MainScreen extends Component{
     getWeather = async(latitude,longitude) => {
         const {data}= await axios.get(
@@ -76,7 +85,6 @@ export default class MainScreen extends Component{
         .then(()=>{
             this.refreshScreen();
         });
-        //this.refreshScreen();
         }
         else if(this.state.getdata1==0){
             this.refs.toast.show('이미 사용중입니다.',1000);
@@ -97,7 +105,6 @@ export default class MainScreen extends Component{
             .then(()=>{
                 this.refreshScreen();
             });
-       // this.refreshScreen();
         }
         else if(this.state.getdata1==1){
             this.refs.toast.show('대여한 킥보드가 없습니다.',1000);
@@ -260,7 +267,7 @@ const styles = StyleSheet.create({
         
         position: 'absolute',
         bottom: 530,
-        left: 30,
+        //left: 30,
 
     },
     bar:{

@@ -11,7 +11,6 @@ export default class Signup extends Component{
         this.ref = firebase.firestore().collection('user')
         this.state={
             email: '이메일',
-            StudentId:'학번', 
             password:'비밀번호',
                     
         }
@@ -22,7 +21,7 @@ export default class Signup extends Component{
         firebase
         .auth()
         .createUserWithEmailAndPassword(this.state.email,this.state.password)
-        .then(()=> navigation.push('Loginscreen'),this.ref.add({id:this.state.StudentId}))
+        .then(()=> navigation.push('Loginscreen'))
         .catch(() => this.refs.toast.show('이메일 형식을 확인해주세요. \n비밀번호는 6자 이상이어야 합니다.',1000));
     }
     render(){
@@ -36,12 +35,7 @@ export default class Signup extends Component{
                 placeholder={this.state.email}
                 placeholderTextColor='white' 
                 autoCorrect={false} />
-                <TextInput
-                style={styles.TextInputButton}
-                onChangeText={(StudentId)=> this.setState({StudentId})}
-                placeholder={this.state.StudentId}
-                placeholderTextColor='white' 
-                autoCorrect={false} />
+             
                 <TextInput
                 style={styles.TextInputButton}
                 onChangeText={(password)=> this.setState({password})}
