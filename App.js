@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, Text, View, Image } from 'react-native';
 
 import * as firebase from 'firebase';
 import '@firebase/firestore';
@@ -9,6 +8,8 @@ import '@firebase/firestore';
 import Loginscreen from './src/Loginscreen';
 import Signup from './src/Signup';
 import MainScreen from './src/MainScreen';
+import NewWebview from './src/NewWebview';
+import eclassWebview from './src/eclassWebview';
 
 const AuthStack = createStackNavigator();
 
@@ -19,7 +20,8 @@ export default () =>(
       <AuthStack.Screen name="Loginscreen" component={Loginscreen} options= {{ headerShown: false}}/>
       <AuthStack.Screen name="Signup" component={Signup} options= {{ headerShown: false}}/>
       <AuthStack.Screen name="MainScreen" component={MainScreen} options= {{headerShown: false}}/> 
-    
+      <AuthStack.Screen name="NewWebview" component={NewWebview} options= {{ headerShown: false}}/>
+      <AuthStack.Screen name="eclassWebview" component={eclassWebview} options= {{ headerShown: false}}/>
       
       
     </AuthStack.Navigator>
@@ -27,13 +29,14 @@ export default () =>(
 );
 
 var firebaseConfig = {
-  apiKey: "AIzaSyBmNYJoFofkqxge-28EsHW9bAeFwoHanEg",
-  authDomain: "kickproject-3908e.firebaseapp.com",
-  databaseURL: "https://kickproject-3908e.firebaseio.com",
-  projectId: "kickproject-3908e",
-  storageBucket: "kickproject-3908e.appspot.com",
-  messagingSenderId: "244147540827",
-  appId: "1:244147540827:web:29b00139f73d38a30f007e"
+  apiKey: "AIzaSyChruCHF59jwYFTgopy3wTy4ZG615zanPQ",
+  authDomain: "moonlit-byway-253404.firebaseapp.com",
+  databaseURL: "https://moonlit-byway-253404.firebaseio.com",
+  projectId: "moonlit-byway-253404",
+  storageBucket: "moonlit-byway-253404.appspot.com",
+  messagingSenderId: "531783704118",
+  appId: "1:531783704118:web:030639fbeb7247f2078297",
+  measurementId: "G-P8XFR4R2WR"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);

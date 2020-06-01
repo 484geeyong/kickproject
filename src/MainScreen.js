@@ -174,7 +174,18 @@ export default class MainScreen extends Component{
                     :
                     null
                 }
-                
+                <View style={styles.webview}>
+                    <TouchableOpacity
+                        onPress={()=> navigation.push("NewWebview")}>
+                        <AntDesign name="iconfontdesktop" color="white" size={40}/>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.Ewebview}>
+                    <TouchableOpacity
+                        onPress={()=> navigation.push("eclassWebview")}>
+                        <AntDesign name="earth" color="white" size={35}/>
+                    </TouchableOpacity>
+                </View>
                
 
                 <View style={styles.WBox}>
@@ -185,6 +196,8 @@ export default class MainScreen extends Component{
                     />
                 </View>
                 <Text style={styles.Text}>로그아웃</Text>
+                <Text style={styles.WebText}>도서관 좌석현황</Text>
+                <Text style={styles.eclass}>eclass</Text>
                 <Toast ref="toast"/>
             </View>
         );
@@ -201,12 +214,24 @@ const styles = StyleSheet.create({
     logout:{
         position: 'absolute',
         right:20,
-        bottom: 50
+        bottom: 55
     },
     Text:{
         position: 'absolute',
         right: 10,
-        bottom: 30,
+        bottom: 35,
+        color: 'white',
+    },
+    WebText:{
+        position: 'absolute',
+        left: 10,
+        bottom: 35,
+        color: 'white',
+    },
+    eclass:{
+        position: 'absolute',
+        
+        bottom: 35,
         color: 'white',
     },
     WBox:{
@@ -245,9 +270,18 @@ const styles = StyleSheet.create({
         bottom: 40
     },
     icon: {
-        
         top: 35,
         left: 10
     },
+    webview:{
+        position: 'absolute',
+        left:35,
+        bottom: 50
+    },
+    Ewebview:{
+        position: 'absolute',
+        bottom: 50,
+    
+    }
     
 });
