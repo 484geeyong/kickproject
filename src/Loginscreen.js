@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import{StyleSheet,view, Text, View,Image,TextInput, TouchableWithoutFeedback,TouchableOpacity,ActivityIndicator,} from 'react-native';
+import{StyleSheet, Text, View,Image,TextInput, TouchableOpacity} from 'react-native';
 import FooterButton from './components/FooterButton'
-import { ScreenContainer } from 'react-native-screens';
 import * as firebase from 'firebase';
 import Toast from 'react-native-easy-toast';
 import '@firebase/firestore';

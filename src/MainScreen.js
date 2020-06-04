@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet,Alert,Image,button,alert,Platform} from 'react-native';
+import {View, Text, StyleSheet,Alert,Image} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as firebase from 'firebase';
-import { TouchableWithoutFeedback, TouchableOpacity } from 'react-native-gesture-handler';
+import {TouchableOpacity } from 'react-native-gesture-handler';
 import Toast from 'react-native-easy-toast';
 import WeatherBox from './components/WeatherBox';
 import '@firebase/firestore';
@@ -11,17 +10,18 @@ import * as Location from 'expo-location';
 import axios from "axios";
 import FooterButton from './components/FooterButton'
 const API_KEY ="f80cd96fc7a28094aa070080d3c5a57b";
-
+//
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
 
-YellowBox.ignoreWarnings(['Setting a timer']);
+YellowBox.ignoreWarnings(['Setting a timer']); //안드로이드 디바이스 에러 문제 해결
 const _console = _.clone(console);
 console.warn = message => {
   if (message.indexOf('Setting a timer') <= -1) {
     _console.warn(message);
   }
 };
+//
 export default class MainScreen extends Component{
     getWeather = async(latitude,longitude) => {
         const {data}= await axios.get(
@@ -44,25 +44,19 @@ export default class MainScreen extends Component{
         super(props);
         this.ref=firebase.firestore().collection('user');
         this.state = {
-            isSwitchTurnOn: true,
-            weatherIcon: "",
-            weatherText: "",
+           
             temperature: null,
             location: null,
             getdata1: null,
             show:true,
-            showre:true,
+            showre:true
         };
         
     }
-    
     componentDidMount(){
         this.getLocatin();
         this.refreshScreen();
-
     }
-    
-
     handleSignOut = () =>{
     const {navigation} = this.props;
     firebase
@@ -71,8 +65,7 @@ export default class MainScreen extends Component{
         .then(() => navigation.push('Loginscreen'))
         .catch(()=> this.refs.toast.show('오류가 발생했습니다. 다시 시도해 주세요',1000));
     }
-    handleBw =()=>{
-   
+    handleBw =()=>{ //대여 
         console.log(this.state.getdata1);
         if(this.state.getdata1==1){
         this.refs.toast.show('비밀번호는 0000입니다.',1000);
@@ -91,7 +84,7 @@ export default class MainScreen extends Component{
         }
         
     }
-    handleRe =()=>{
+    handleRe =()=>{ //반납
         this.refreshScreen();
         console.log(this.state.getdata1);
         if(this.state.getdata1==0){
@@ -112,7 +105,7 @@ export default class MainScreen extends Component{
         
         this.refreshScreen();
         }
-    refreshScreen = ()=>{
+    refreshScreen = ()=>{ 
         this.setState(previousState=>({show: !previousState.show}))
         this.setState(previousState =>({showre: !previousState.showre}))
         const self=this;

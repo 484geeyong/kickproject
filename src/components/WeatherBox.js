@@ -1,33 +1,14 @@
 import React, { Component } from 'react';
 
 import {StyleSheet,View,Text,Image} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import '@firebase/firestore';
 
 export default class WeatherBox extends Component{
-    renderWeatherIcon (weather) {
-        switch(weather) {
-            case "Sunny":
-                return (
-                    <View style={styles.weatherIcon}>
-                        <Ionicons name="ios-sunny" color="#ffffff" size={80} />
-                    </View>
-                )
-        }
-    }
-
-
-
     render(){
         return(
             <View>
                 <Image source={require('./WeatherBox.png')}
                 style={StyleSheet.weatherBox}
-                />
-                {this.renderWeatherIcon(this.props.weather)}
-                 <Image
-                    source={{uri: this.props.weatherIcon}}
-                    style={styles.weatherIcon}
                 />
                 <Text style={styles.temperatureText}>
                     {this.props.temperature}℃
