@@ -16,7 +16,7 @@ import _ from 'lodash';
 
 YellowBox.ignoreWarnings(['Setting a timer']); //안드로이드 디바이스 에러 문제 해결
 const _console = _.clone(console);
-console.warn = message => {
+console.warn = message => {w
   if (message.indexOf('Setting a timer') <= -1) {
     _console.warn(message);
   }
