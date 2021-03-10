@@ -1,3 +1,14 @@
+### 교내 전동킥보드 공유 앱 (ReactNative)
+
+### **진행기간 : 2020.04.21 ~ 2020.05.21**
+
+### **주요내용 : 교내 전동킥보드 대여 및 반납 공유 서비스**
+
+### **구현기능 : 날씨(해당 디바이스 위치기반), 로그인/회원가입/로그아웃,  킥보드 대여, 반납, 도서관 좌석 현황, eclass**
+
+### **기여도 :** ReactNative**(100%)**
+
+### **사용스킬 :** ReactNative**, Firebase**
 
 ![5F9755C001](https://user-images.githubusercontent.com/55137069/86770520-c5d0bd00-c08b-11ea-9d9c-797dce39b1bb.jpeg)
 ![5F9755C002](https://user-images.githubusercontent.com/55137069/86770523-c5d0bd00-c08b-11ea-9ef9-9544e570eed4.jpeg)
